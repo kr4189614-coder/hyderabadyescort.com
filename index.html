@@ -423,6 +423,19 @@ body{font-family:'Inter',sans-serif;background:#f0f4ff;min-height:100vh;overflow
           <div id="credOk" style="background:#f0fdf4;color:#16a34a;border-radius:8px;padding:8px 12px;font-size:12px;margin-bottom:10px;display:none"></div>
           <button class="btn-save" onclick="changeCredentials()" style="margin-top:2px"><i class="fas fa-save"></i> Save Credentials</button>
         </div>
+
+        <!-- GITHUB SYNC SETTING -->
+        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.08);margin-top:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+            <div style="width:36px;height:36px;background:#fdf4ff;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#9333ea;font-size:16px"><i class="fab fa-github"></i></div>
+            <div><div style="font-size:14px;font-weight:700;color:#1e293b">GitHub Auto-Sync</div><div style="font-size:11px;color:#6b7280">Makes data live for all users instantly</div></div>
+          </div>
+          <div class="form-group-s">
+            <label style="font-size:12px;font-weight:600;color:#374151;display:block;margin-bottom:5px">GitHub Access Token (PAT)</label>
+            <div class="inp-wrap"><i class="fas fa-key"></i><input type="password" class="form-control" id="gitPatInput" placeholder="ghp_xxx..."/></div>
+          </div>
+          <button class="btn-save" onclick="saveGitConfig()" style="margin-top:2px;background:linear-gradient(135deg,#9333ea,#c026d3)"><i class="fas fa-save"></i> Save GitHub Config</button>
+        </div>
       </div>
     </div>
   </div>
@@ -732,7 +745,7 @@ const dummyProfiles = [
 let profiles = JSON.parse(localStorage.getItem('sd_profiles') || 'null') || dummyProfiles;
 profiles = profiles.map(p => ({...p, approved: p.approved !== false}));
 let nextId = profiles.length ? Math.max(...profiles.map(p=>p.id))+1 : 1;
-function saveToStorage(){ localStorage.setItem('sd_profiles', JSON.stringify(profiles)); }
+function saveToStorage(){ localStorage.setItem('sd_profiles', JSON.stringify(profiles)); if(typeof saveToGit==='function') saveToGit(); }
 
 // ── STATE & CITY DATA ─────────────────────────
 const defaultStates = ['Rajasthan','Maharashtra','Delhi','Karnataka','Gujarat'];
@@ -745,8 +758,8 @@ const defaultCities = {
 };
 let states = JSON.parse(localStorage.getItem('sd_states')||'null') || defaultStates;
 let cities  = JSON.parse(localStorage.getItem('sd_cities')||'null') || defaultCities;
-function saveStates(){ localStorage.setItem('sd_states', JSON.stringify(states)); }
-function saveCities(){ localStorage.setItem('sd_cities', JSON.stringify(cities)); }
+function saveStates(){ localStorage.setItem('sd_states', JSON.stringify(states)); if(typeof saveToGit==='function') saveToGit(); }
+function saveCities(){ localStorage.setItem('sd_cities', JSON.stringify(cities)); if(typeof saveToGit==='function') saveToGit(); }
 
 function populateAllDropdowns(){
   // state dropdowns (stateFilter, pState, cityStateSelect)
@@ -1087,7 +1100,7 @@ const defaultBoxes = [
 ];
 let serviceBoxes = JSON.parse(localStorage.getItem('sd_boxes')||'null') || defaultBoxes;
 let nextBoxId = serviceBoxes.length ? Math.max(...serviceBoxes.map(b=>b.id))+1 : 1;
-function saveBoxes(){ localStorage.setItem('sd_boxes',JSON.stringify(serviceBoxes)); }
+function saveBoxes(){ localStorage.setItem('sd_boxes',JSON.stringify(serviceBoxes)); if(typeof saveToGit==='function') saveToGit(); }
 
 function renderServiceBoxes(){
   const listHtml = serviceBoxes.map(b=>`
@@ -1172,11 +1185,89 @@ function deleteBox(id){
   showToast('Box deleted!');
 }
 
+// ── GITHUB SYNC LOGIC ─────────────────────────
+let GIT_PAT = localStorage.getItem('sd_git_pat') || '';
+let GIT_REPO = 'kr4189614-coder/hyderabadyescort.com';
+let GIT_SHA = '';
+
+function saveGitConfig(){
+  GIT_PAT = document.getElementById('gitPatInput').value.trim();
+  localStorage.setItem('sd_git_pat', GIT_PAT);
+  showToast('GitHub token saved! ✅');
+}
+
+let gitSyncTimer;
+function saveToGit(){
+  clearTimeout(gitSyncTimer);
+  gitSyncTimer = setTimeout(async ()=>{
+    if(!GIT_PAT) return; // Silent if no token
+    showToast('Syncing to GitHub auto... ⏳');
+    try {
+      const updatedContent = { profiles, states, cities, serviceBoxes };
+      const base64Content = btoa(unescape(encodeURIComponent(JSON.stringify(updatedContent, null, 2))));
+      const payload = { message: "Auto-sync update", content: base64Content };
+      if(GIT_SHA) payload.sha = GIT_SHA;
+      
+      const res = await fetch(`https://api.github.com/repos/${GIT_REPO}/contents/data.json`, {
+        method: "PUT",
+        headers: { "Authorization": `token ${GIT_PAT}`, "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if(res.ok) {
+          const respData = await res.json();
+          GIT_SHA = respData.content.sha;
+          showToast('Live Website Updated! ✅');
+      } else {
+          showToast('Sync Error! Check Token/Internet ❌');
+      }
+    } catch(e) {
+        showToast('Network error on sync ❌');
+    }
+  }, 1500);
+}
+
+async function fetchGitData() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GIT_REPO}/contents/data.json?t=${new Date().getTime()}`, {
+      headers: GIT_PAT ? { "Authorization": `token ${GIT_PAT}` } : {}
+    });
+    if(res.ok) {
+      const gData = await res.json();
+      GIT_SHA = gData.sha;
+      const content = JSON.parse(decodeURIComponent(escape(atob(gData.content))));
+      if(content.profiles) profiles = content.profiles;
+      if(content.states) states = content.states;
+      if(content.cities) cities = content.cities;
+      if(content.serviceBoxes) serviceBoxes = content.serviceBoxes;
+      
+      profiles = profiles.map(p => ({...p, approved: p.approved !== false}));
+      nextId = profiles.length ? Math.max(...profiles.map(p=>p.id))+1 : 1;
+      nextBoxId = serviceBoxes.length ? Math.max(...serviceBoxes.map(b=>b.id))+1 : 1;
+      
+      localStorage.setItem('sd_profiles', JSON.stringify(profiles));
+      localStorage.setItem('sd_states', JSON.stringify(states));
+      localStorage.setItem('sd_cities', JSON.stringify(cities));
+      localStorage.setItem('sd_boxes', JSON.stringify(serviceBoxes));
+      
+      filterProfiles();
+      populateAllDropdowns();
+      if(document.getElementById('page-admin') && document.getElementById('page-admin').classList.contains('active')){
+         if(document.getElementById('totalProfiles')) document.getElementById('totalProfiles').textContent = profiles.length;
+      }
+    }
+  } catch(e) {}
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  if(document.getElementById('gitPatInput')) document.getElementById('gitPatInput').value = GIT_PAT;
+});
+
 // ── INIT ──────────────────────────────────────
 applySiteTitle();
 filterProfiles();
 populateAllDropdowns();
 updateAuthUI();
+fetchGitData();
 </script>
 </body>
 </html>
