@@ -1,14 +1,16 @@
 {
   "profiles": [],
   "states": [
-    "Gujarat"
+    "Gujarat",
+    "HYD"
   ],
   "cities": {
     "Gujarat": [
       "Surat",
       "Ahmedabad",
       "Vadodara"
-    ]
+    ],
+    "HYD": []
   },
   "serviceBoxes": [
     {
