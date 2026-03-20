@@ -139,7 +139,9 @@
   ],
   "cities": {
     "Test": [],
-    "Jharkhand": []
+    "Jharkhand": [
+      "Ranchi"
+    ]
   },
   "serviceBoxes": [
     {
