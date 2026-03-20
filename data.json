@@ -135,13 +135,15 @@
   ],
   "states": [
     "Test",
-    "Jharkhand"
+    "Jharkhand",
+    "Hyderabad"
   ],
   "cities": {
     "Test": [],
     "Jharkhand": [
       "Ranchi"
-    ]
+    ],
+    "Hyderabad": []
   },
   "serviceBoxes": [
     {
