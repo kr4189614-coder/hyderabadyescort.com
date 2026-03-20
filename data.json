@@ -1,33 +1,9 @@
 {
   "profiles": [],
   "states": [
-    "Rajasthan",
-    "Maharashtra",
-    "Delhi",
-    "Karnataka",
     "Gujarat"
   ],
   "cities": {
-    "Rajasthan": [
-      "Jaipur",
-      "Jodhpur",
-      "Udaipur"
-    ],
-    "Maharashtra": [
-      "Mumbai",
-      "Pune",
-      "Nagpur"
-    ],
-    "Delhi": [
-      "New Delhi",
-      "Dwarka",
-      "Rohini"
-    ],
-    "Karnataka": [
-      "Bangalore",
-      "Mysore",
-      "Hubli"
-    ],
     "Gujarat": [
       "Surat",
       "Ahmedabad",
