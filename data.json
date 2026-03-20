@@ -1,51 +1,30 @@
 {
-  "profiles": [],
-  "states": [
-    "Gujarat",
-    "HYD",
-    "test",
-    "test2",
-    "test3"
+  "profiles": [
+    {"id":1,"name":"Riya","age":24,"city":"Jaipur","state":"Rajasthan","phone":"9876543210","wa":"9876543210","img":"https://randomuser.me/api/portraits/women/44.jpg"},
+    {"id":2,"name":"Priya","age":22,"city":"Mumbai","state":"Maharashtra","phone":"9123456780","wa":"9123456780","img":"https://randomuser.me/api/portraits/women/65.jpg"},
+    {"id":3,"name":"Sneha","age":26,"city":"Bangalore","state":"Karnataka","phone":"9988776655","wa":"9988776655","img":"https://randomuser.me/api/portraits/women/32.jpg"},
+    {"id":4,"name":"Kavya","age":23,"city":"New Delhi","state":"Delhi","phone":"9871234560","wa":"9871234560","img":"https://randomuser.me/api/portraits/women/68.jpg"},
+    {"id":5,"name":"Nisha","age":25,"city":"Surat","state":"Gujarat","phone":"9856321470","wa":"9856321470","img":"https://randomuser.me/api/portraits/women/12.jpg"},
+    {"id":6,"name":"Pooja","age":27,"city":"Jaipur","state":"Rajasthan","phone":"9745632180","wa":"9745632180","img":"https://randomuser.me/api/portraits/women/18.jpg"},
+    {"id":7,"name":"Ananya","age":21,"city":"Mumbai","state":"Maharashtra","phone":"9634521870","wa":"9634521870","img":"https://randomuser.me/api/portraits/women/55.jpg"},
+    {"id":8,"name":"Divya","age":24,"city":"Bangalore","state":"Karnataka","phone":"9523410960","wa":"9523410960","img":"https://randomuser.me/api/portraits/women/27.jpg"},
+    {"id":9,"name":"Meera","age":28,"city":"New Delhi","state":"Delhi","phone":"9412309850","wa":"9412309850","img":"https://randomuser.me/api/portraits/women/49.jpg"},
+    {"id":10,"name":"Sonia","age":22,"city":"Surat","state":"Gujarat","phone":"9301298740","wa":"9301298740","img":"https://randomuser.me/api/portraits/women/38.jpg"},
+    {"id":11,"name":"Tanya","age":25,"city":"Jaipur","state":"Rajasthan","phone":"9213456780","wa":"9213456780","img":"https://randomuser.me/api/portraits/women/22.jpg"},
+    {"id":12,"name":"Renu","age":23,"city":"Mumbai","state":"Maharashtra","phone":"9156789430","wa":"9156789430","img":"https://randomuser.me/api/portraits/women/77.jpg"}
   ],
+  "states": ["Rajasthan", "Maharashtra", "Delhi", "Karnataka", "Gujarat"],
   "cities": {
-    "Gujarat": [
-      "Surat",
-      "Ahmedabad",
-      "Vadodara"
-    ],
-    "HYD": [],
-    "test": [],
-    "test2": [],
-    "test3": []
+    "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur"],
+    "Maharashtra": ["Mumbai", "Pune", "Nagpur"],
+    "Delhi": ["New Delhi", "Dwarka", "Rohini"],
+    "Karnataka": ["Bangalore", "Mysore", "Hubli"],
+    "Gujarat": ["Surat", "Ahmedabad", "Vadodara"]
   },
   "serviceBoxes": [
-    {
-      "id": 1,
-      "icon": "fas fa-crown",
-      "title": "Premium Companion Services",
-      "desc": "Experience top-tier companionship with verified & trusted profiles across all major cities.",
-      "gradient": "135deg,#2563eb,#7c3aed"
-    },
-    {
-      "id": 2,
-      "icon": "fas fa-shield-alt",
-      "title": "100% Privacy Guaranteed",
-      "desc": "Your privacy is our top priority. All conversations and bookings are completely confidential.",
-      "gradient": "135deg,#16a34a,#059669"
-    },
-    {
-      "id": 3,
-      "icon": "fas fa-clock",
-      "title": "Available 24/7",
-      "desc": "Our services are available round the clock, 365 days a year. Reach us anytime via Call or WhatsApp.",
-      "gradient": "135deg,#ea580c,#dc2626"
-    },
-    {
-      "id": 4,
-      "icon": "fas fa-check-circle",
-      "title": "Verified Profiles Only",
-      "desc": "All profiles are manually verified by our team to ensure authenticity and quality service.",
-      "gradient": "135deg,#7c3aed,#c026d3"
-    }
+    {"id":1,"icon":"fas fa-crown","title":"Premium Companion Services","desc":"Experience top-tier companionship with verified & trusted profiles across all major cities.","gradient":"135deg,#2563eb,#7c3aed"},
+    {"id":2,"icon":"fas fa-shield-alt","title":"100% Privacy Guaranteed","desc":"Your privacy is our top priority. All conversations and bookings are completely confidential.","gradient":"135deg,#16a34a,#059669"},
+    {"id":3,"icon":"fas fa-clock","title":"Available 24/7","desc":"Our services are available round the clock, 365 days a year. Reach us anytime via Call or WhatsApp.","gradient":"135deg,#ea580c,#dc2626"},
+    {"id":4,"icon":"fas fa-check-circle","title":"Verified Profiles Only","desc":"All profiles are manually verified by our team to ensure authenticity and quality service.","gradient":"135deg,#7c3aed,#c026d3"}
   ]
 }
