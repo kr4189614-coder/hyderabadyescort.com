@@ -133,8 +133,12 @@
       "approved": true
     }
   ],
-  "states": [],
-  "cities": {},
+  "states": [
+    "Test"
+  ],
+  "cities": {
+    "Test": []
+  },
   "serviceBoxes": [
     {
       "id": 1,
