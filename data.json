@@ -3,7 +3,8 @@
   "states": [
     "Gujarat",
     "HYD",
-    "test"
+    "test",
+    "test2"
   ],
   "cities": {
     "Gujarat": [
@@ -12,7 +13,8 @@
       "Vadodara"
     ],
     "HYD": [],
-    "test": []
+    "test": [],
+    "test2": []
   },
   "serviceBoxes": [
     {
