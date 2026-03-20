@@ -134,10 +134,12 @@
     }
   ],
   "states": [
-    "Test"
+    "Test",
+    "Jharkhand"
   ],
   "cities": {
-    "Test": []
+    "Test": [],
+    "Jharkhand": []
   },
   "serviceBoxes": [
     {
